@@ -32,6 +32,12 @@ export function getMemo(id: string): Memo | null {
   return loadMemos().find((m) => m.id === id) ?? null;
 }
 
+export function updateMemoAnswer(id: string, answer: string): Memo[] {
+  const next = loadMemos().map((m) => (m.id === id ? { ...m, answer } : m));
+  saveMemos(next);
+  return next;
+}
+
 export function deleteMemo(id: string): Memo[] {
   const next = loadMemos().filter((m) => m.id !== id);
   saveMemos(next);

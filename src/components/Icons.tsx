@@ -9,15 +9,6 @@ export function MarkIcon({ size = 18 }: IconProps) {
   );
 }
 
-export function MicIcon({ size = 18 }: IconProps) {
-  return (
-    <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <rect x="8.5" y="3.5" width="7" height="11" rx="3.5" stroke="currentColor" strokeWidth="1.6" />
-      <path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M9 21h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 export function CalendarIcon({ size = 16 }: IconProps) {
   return (
     <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none">

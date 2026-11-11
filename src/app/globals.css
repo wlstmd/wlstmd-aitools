@@ -219,28 +219,16 @@ a { color: inherit; }
 .assistant-save-btn:hover:not(:disabled) { background: #eae7fb; }
 .assistant-save-btn:disabled { color: var(--a-muted); cursor: default; }
 
-/* the orb itself: soft indigo-to-lavender gradient, slow breathing + gentle undulation */
+/* the orb itself: soft indigo-to-lavender gradient, slow breathing + gentle undulation.
+   phase classes swap the palette/pace: listening (red), thinking (fast indigo), speaking (green). */
 .voice-command { align-items: center; display: flex; flex-direction: column; gap: 10px; }
-.voice-btn {
-  align-items: center;
-  background: none;
-  border: 0;
-  color: var(--muted);
-  cursor: pointer;
-  display: inline-flex;
-  flex-shrink: 0;
-  height: 36px;
-  justify-content: center;
-  width: 36px;
-  transition: color 0.15s ease;
-}
-.voice-btn:hover { color: var(--title); }
 
 .voice-btn-prominent {
   background: radial-gradient(circle at 50% 28%, #6a5cf0 0%, #8b7ef5 32%, #c9c3f7 62%, #f4f2fb 100%);
   border: 0;
   border-radius: 50%;
   box-shadow: 0 0 70px 6px rgba(111, 99, 214, 0.28);
+  cursor: pointer;
   height: 190px;
   width: 190px;
   position: relative;
@@ -256,9 +244,17 @@ a { color: inherit; }
   animation: orb-swirl 7s ease-in-out infinite;
 }
 .voice-btn-prominent:hover { box-shadow: 0 0 80px 8px rgba(111, 99, 214, 0.38); }
-.voice-btn-prominent.voice-btn-active {
+
+.voice-btn-listening {
   animation: orb-breathe 1.8s ease-in-out infinite;
-  box-shadow: 0 0 90px 14px rgba(111, 99, 214, 0.45);
+  background: radial-gradient(circle at 50% 28%, #ef4444 0%, #f87171 32%, #fecaca 62%, #f4f2fb 100%);
+  box-shadow: 0 0 90px 14px rgba(239, 68, 68, 0.35);
+}
+.voice-btn-thinking { animation: orb-breathe 1s ease-in-out infinite; }
+.voice-btn-speaking {
+  animation: orb-breathe 1.2s ease-in-out infinite;
+  background: radial-gradient(circle at 50% 28%, #22c55e 0%, #6ee7b7 32%, #d1fae5 70%, #f4f2fb 100%);
+  box-shadow: 0 0 90px 14px rgba(34, 197, 94, 0.3);
 }
 
 @keyframes orb-breathe {
@@ -321,7 +317,6 @@ a { color: inherit; }
 
 .memo-composer { display: flex; gap: 10px; margin-bottom: 18px; padding: 16px; }
 .memo-input { flex: 1; }
-.memo-error { color: var(--danger); font-size: 12px; margin: -10px 0 18px; }
 
 .memo-list { display: flex; flex-direction: column; gap: 8px; }
 .memo-row {

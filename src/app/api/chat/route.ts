@@ -11,6 +11,7 @@ const SYSTEM_PROMPT = `너는 사용자의 일상을 도와주는 비서야. 질
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 type ScheduleEvent = { title: string; date: string | null; detail?: string };
+type TodoItem = { text: string; checked: boolean };
 
 function seoulDateISO(d: Date): string {
   return new Intl.DateTimeFormat("en-CA", {
@@ -61,6 +62,11 @@ export async function POST(req: NextRequest) {
     : [];
   const scheduleFetchFailed = body?.scheduleFetchFailed === true;
 
+  const todoItems: unknown = body?.todoItems;
+  const safeTodoItems: TodoItem[] = Array.isArray(todoItems)
+    ? todoItems.filter((t): t is TodoItem => t && typeof t.text === "string" && typeof t.checked === "boolean")
+    : [];
+
   const now = new Date();
   const todayISO = seoulDateISO(now);
   const todayLabel = new Intl.DateTimeFormat("ko-KR", {
@@ -101,6 +107,14 @@ export async function POST(req: NextRequest) {
         .map((e) => `[${e.title}]\n${e.detail}`)
         .join("\n\n")}`;
     }
+  }
+
+  if (safeTodoItems.length > 0) {
+    const pending = safeTodoItems.filter((t) => !t.checked).map((t) => t.text);
+    const done = safeTodoItems.filter((t) => t.checked).map((t) => t.text);
+    systemContent += `\n\n사용자의 할 일 목록이야. 안 끝난 일: ${
+      pending.length > 0 ? pending.join(", ") : "없음"
+    }. 끝난 일: ${done.length > 0 ? done.join(", ") : "없음"}. 할 일을 물어보거나 브리핑해달라고 하면 안 끝난 일 위주로 답해.`;
   }
 
   let response: Response;
